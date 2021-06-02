@@ -9,7 +9,7 @@ from celery.utils.log import get_task_logger
 from django.conf import settings
 
 # set the default Django settings module for the 'celery' program.
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.production')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.development')
 
 app = Celery('ontask')
 

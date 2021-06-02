@@ -5,7 +5,7 @@ import sys
 if __name__ == "__main__":
     # Change the DJANGO_SETTINGS_MODULE environment variable
     # for using the environment specific settings file.
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.production")
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.development")
 
     from django.core.management import execute_from_command_line
 

@@ -7,7 +7,7 @@ from settings.base import *  # NOQA
 # Turn off debug while imported by Celery with a workaround
 # See http://stackoverflow.com/a/4806384
 if "celery" in sys.argv[0]:
-    DEBUG = False
+    DEBUG = True
 else:
     print('Forcing synchronous execution in Celery')
     CELERY_TASK_ALWAYS_EAGER = True

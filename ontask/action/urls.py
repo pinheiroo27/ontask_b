@@ -161,6 +161,14 @@ urlpatterns = [
         views.preview_response,
         name='preview'),
     path(
+        '<int:pk>/<int:idx>/feedback/',
+        views.preview_feedback,
+        name='feedback'),
+    path(
+        '<int:pk>/<int:idx>/classifier/',
+        views.init_classifier,
+        name='classifier'),
+    path(
         '<int:pk>/<int:idx>/preview_next_all_false/',
         views.preview_next_all_false,
         name='preview_all_false'),

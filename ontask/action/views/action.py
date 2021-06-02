@@ -52,7 +52,7 @@ class ActionCreateView(UserIsInstructor, generic.TemplateView):
     form_class = forms.ActionForm
 
     template_name = 'action/includes/partial_action_create.html'
-
+    print("create view")
     @method_decorator(user_passes_test(is_instructor))
     @method_decorator(ajax_required)
     @method_decorator(get_workflow())
@@ -87,6 +87,7 @@ class ActionUpdateView(UserIsInstructor, generic.DetailView):
 
     @DynamicAttrs
     """
+    print("update view")
 
     model = models.Action
     template_name = 'action/includes/partial_action_update.html'
