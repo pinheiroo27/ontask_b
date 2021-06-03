@@ -1,0 +1,136 @@
+{% load i18n %}
+{% load static %}
+{% block extrahead %}
+  <link href="{% static 'css/query-builder.default.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/sol.css' %}" rel="stylesheet">
+{% endblock extrahead %}
+<div class="js-action-preview-form">
+  <div class="modal-header">
+    {% if n_items %}
+      <h4 class="modal-title">{% blocktrans %}Feedback Analyze {% endblocktrans %}</h4>
+    {% else %}
+      <h4 class="modal-title">{% trans 'Feedback Analyze' %}</h4>
+    {% endif %}
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="mx-3 my-3">
+    {% if all_false %}
+      <p class="alert-danger text-center"><span class="fa fa-exclamation-triangle" style="color:red;"></span> {% trans 'All conditions evaluate to FALSE' %}</p>
+    {% endif %}
+    {% if incorrect_json %}
+      <p class="alert-danger text-center">{% trans 'Incorrect JSON object. Check action text' %}</p>
+    {% endif %}
+    {% if prelude %}
+      <div class="modal-body border border-dark">
+        <strong>{% trans 'Subject:' %}</strong> {{ prelude }}
+      </div>
+    {% endif %}
+    <div id="preview-body" class="modal-body shadow border border-dark">
+      {% if action.action_type == 'personalized_json' %}
+        <pre>{{ action_content }}</pre>
+      {% elif action.action_type == 'personalized_canvas_email' %}
+        <div style="white-space: pre-wrap;">{{ action_content }}</div>
+      {% else %}
+      <div class='conteudo3'>
+				<div id="barras">
+					<br>
+					{% if classe0 == 1 %}
+						<div class="barra75" style="width:50%"> GP1 </div>
+					{% elif classe0 == 0  %}
+						<div class="barra25" style="width:50%"> GP1 </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe1 == 1 %}
+						<div class="barra75" style="width:50%"> GP2 </div>
+					{% elif classe1 == 0  %}
+						<div class="barra25" style="width:50%"> GP2 </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe2 == 1 %}
+						<div class="barra75" style="width:50%"> GP3 </div>
+					{% elif classe2 == 0  %}
+						<div class="barra25" style="width:50%"> GP3 </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe3 == 1 %}
+						<div class="barra75" style="width:50%"> GP4 </div>
+					{% elif classe3 == 0  %}
+						<div class="barra25" style="width:50%"> GP4 </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe4 == 1 %}
+						<div class="barra75" style="width:50%"> GP5 </div>
+					{% elif classe4 == 0  %}
+						<div class="barra25" style="width:50%"> GP5 </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe5 == 1 %}
+						<div class="barra75" style="width:50%"> GP6 </div>
+					{% elif classe5 == 0  %}
+						<div class="barra25" style="width:50%"> GP6 </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe6 == 1 %}
+						<div class="barra75" style="width:50%"> GP7 </div>					<br>
+					{% elif classe6 == 0  %}
+						<div class="barra25" style="width:50%"> GP7 </div>
+					<br>
+					{% else %}
+					{% endif%}
+
+					{% if classe7 == 1 %}
+						<div class="barra75" style="width:50%"> FT Level </div>
+					{% elif classe7 == 0  %}
+						<div class="barra25" style="width:50%"> FT Level </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe8 == 1 %}
+						<div class="barra75" style="width:50%"> FP Level </div>
+					{% elif classe8 == 0  %}
+						<div class="barra25" style="width:50%"> FP Level </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe9 == 1 %}
+						<div class="barra75" style="width:50%"> FR Level </div>
+					{% elif classe9 == 0  %}
+						<div class="barra25" style="width:50%"> FR Level </div>
+					{% else %}
+					{% endif%}
+
+					{% if classe10 == 1 %}
+						<div class="barra75" style="width:50%"> FS Level </div>
+					{% elif classe10 == 0  %}
+						<div class="barra25" style="width:50%"> FS Level </div>
+					{% else %}
+					{% endif%}
+				</div>
+			</div>
+      {% endif %}
+    </div>
+    {% if show_values or show_conditions or action.attachments.exists %}
+      <div id="preview-variables" class="modal-body shadow border border-dark">
+        {% if show_values %}
+          <div><strong>{% trans 'Values:' %}</strong> {{ show_values }}</div>
+        {% endif %}
+        {% if show_conditions %}
+          <div><strong>{% trans 'Conditions:' %}</strong> {{ show_conditions }}</div>
+        {% endif %}
+        {% if action.attachments.exists %}
+          <div><strong>{% trans 'Attachments:' %}</strong> {{ action.attachment_names|join:", " }}</div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
