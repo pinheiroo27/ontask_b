@@ -268,7 +268,12 @@ def preview_response(
             idx,
             context,
             request.GET.get('subject_content'))
-
+    print(request.content_params)
+    print(request.path)
+    print(request.POST.items())
+    print(request.POST.values())
+    print(request.POST.get('action_content'))
+    print(context)
     return http.JsonResponse({
         'html_form': render_to_string(
             'action/includes/partial_preview.html',
@@ -335,7 +340,7 @@ def preview_feedback(
         data_string += 'classe' + str(j+1) + ": " + str(y_pred[0]) + " <br> "
 
     if action_content:
-        action.set_text_content(data_string)
+        action.set_text_content(action_content)
     print("ACTION CONTENT - PREVIEW: " + action_content)
     # Initial context to render the response page.
     context = {'action': action, 'index': idx}
@@ -353,9 +358,17 @@ def preview_feedback(
             request.GET.get('subject_content'))
     print(request)
     print(request.GET.get('subject_content'))
+    print(context)
+    # context.update({'data': data})
+    # data = {}
+    for i in range(0, 11):
+        if i % 2 == 0:
+            context.update({'classe' + str(i): data['classe' + str(i)]})
+        else:
+            context.update({'classe' + str(i): data['classe' + str(i)]})
     return http.JsonResponse({
         'html_form': render_to_string(
-            'action/includes/partial_preview_feedback.html',
+            'action/includes/partial_preview_feedback_result.html',
             context,
             request=request)})
 
@@ -430,8 +443,11 @@ def init_classifier(
             idx,
             context,
             request.GET.get('subject_content'))
-    print(request)
+    print(request.path)
+    # new_url = str(request.path).replace('1/classifier/', 'edit/')
+    # print(new_url)
     print(request.GET.get('subject_content'))
+    # context.update({'show_values': 'yes'})
     return http.JsonResponse({
         'html_form': render_to_string(
             'action/includes/partial_preview_feedback.html',

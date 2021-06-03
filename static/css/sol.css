@@ -331,3 +331,61 @@
     animation-timing-function: linear;
     animation-iteration-count: infinite;
 }
+
+
+.conteudo3{
+
+	padding-top: 6px;
+
+	padding-bottom: 4px;
+
+	padding-left: 10px;
+
+	padding-right: 10px;
+
+}
+
+
+
+.conteudo3 #titulosBarras {
+
+	color: #797979;
+
+	font-size: 14px;
+
+	height:30px;
+
+	line-height:32px;
+
+
+
+}
+
+
+
+.conteudo3 .barra25, .barra50, .barra75, .barra100, .barra200 {
+
+	color:#FFF;
+
+	font-size: 14px;
+
+	padding-left:10px;
+
+	height:25px;
+
+	line-height:30px;
+
+	border-radius: 5px;
+
+}
+
+.conteudo3 .barra25{ background-color: #FF4119; }
+
+.conteudo3 .barra50{ background-color: #FFB813; }
+
+.conteudo3 .barra75{ background-color: #88CC14; }
+
+.conteudo3 .barra100{ background-color: #004CFF; }
+
+.conteudo3 .barra200{ background-color: #88CC14; }
+
