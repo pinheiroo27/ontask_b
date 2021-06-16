@@ -9,7 +9,7 @@
     {% if n_items %}
       <h4 class="modal-title">{% blocktrans %}Feedback Analyze {% endblocktrans %}</h4>
     {% else %}
-      <h4 class="modal-title">{% trans 'Feedback Analyze' %}</h4>
+      <h4 class="modal-title">{% trans 'Feedback Analyzer' %}</h4>
     {% endif %}
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span>
@@ -34,87 +34,192 @@
       {% elif action.action_type == 'personalized_canvas_email' %}
         <div style="white-space: pre-wrap;">{{ action_content }}</div>
       {% else %}
-      <div class='conteudo3'>
-				<div id="barras">
-					<br>
-					{% if classe0 == 1 %}
-						<div class="barra75" style="width:50%"> GP1 </div>
-					{% elif classe0 == 0  %}
-						<div class="barra25" style="width:50%"> GP1 </div>
-					{% else %}
-					{% endif%}
 
-					{% if classe1 == 1 %}
-						<div class="barra75" style="width:50%"> GP2 </div>
-					{% elif classe1 == 0  %}
-						<div class="barra25" style="width:50%"> GP2 </div>
-					{% else %}
-					{% endif%}
+      	<div class='conteudo3'>
 
-					{% if classe2 == 1 %}
-						<div class="barra75" style="width:50%"> GP3 </div>
-					{% elif classe2 == 0  %}
-						<div class="barra25" style="width:50%"> GP3 </div>
-					{% else %}
-					{% endif%}
+		<h4 class="modal-title">{% trans 'Good Practices' %}</h4>
+		  {% if classe0 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP1' %}">
+			  {% trans 'GP1' %}
+		  </button>
+		  {% elif classe0 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP1' %}">
+			  {% trans 'GP1' %}
+		  </button>
+		  {% endif%}
 
-					{% if classe3 == 1 %}
-						<div class="barra75" style="width:50%"> GP4 </div>
-					{% elif classe3 == 0  %}
-						<div class="barra25" style="width:50%"> GP4 </div>
-					{% else %}
-					{% endif%}
+		  {% if classe1 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP2' %}">
+			  {% trans 'GP2' %}
+		  </button>
+		  {% elif classe1 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP2' %}">
+			  {% trans 'GP2' %}
+		  </button>
 
-					{% if classe4 == 1 %}
-						<div class="barra75" style="width:50%"> GP5 </div>
-					{% elif classe4 == 0  %}
-						<div class="barra25" style="width:50%"> GP5 </div>
-					{% else %}
-					{% endif%}
+		  {% if classe2 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP3' %}">
+			  {% trans 'GP3' %}
+		  </button>
+		  {% elif classe2 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP3' %}">
+			  {% trans 'GP3' %}
+		  </button>
+		  {% endif%}
 
-					{% if classe5 == 1 %}
-						<div class="barra75" style="width:50%"> GP6 </div>
-					{% elif classe5 == 0  %}
-						<div class="barra25" style="width:50%"> GP6 </div>
-					{% else %}
-					{% endif%}
+		  {% if classe3 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP4' %}">
+			  {% trans 'GP4' %}
+		  </button>
+		  {% elif classe3 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP4' %}">
+			  {% trans 'GP4' %}
+		  </button>
+		  {% endif%}
 
-					{% if classe6 == 1 %}
-						<div class="barra75" style="width:50%"> GP7 </div>					<br>
-					{% elif classe6 == 0  %}
-						<div class="barra25" style="width:50%"> GP7 </div>
-					<br>
-					{% else %}
-					{% endif%}
+		  {% if classe4 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP5' %}">
+			  {% trans 'GP5' %}
+		  </button>
+		  {% elif classe4 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP5' %}">
+			  {% trans 'GP5' %}
+		  </button>
+		  {% endif%}
 
-					{% if classe7 == 1 %}
-						<div class="barra75" style="width:50%"> FT Level </div>
-					{% elif classe7 == 0  %}
-						<div class="barra25" style="width:50%"> FT Level </div>
-					{% else %}
-					{% endif%}
+		  {% if classe5 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP6' %}">
+			  {% trans 'GP6' %}
+		  </button>
+		  {% elif classe5 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP6' %}">
+			  {% trans 'GP6' %}
+		  </button>
+		  {% endif%}
 
-					{% if classe8 == 1 %}
-						<div class="barra75" style="width:50%"> FP Level </div>
-					{% elif classe8 == 0  %}
-						<div class="barra25" style="width:50%"> FP Level </div>
-					{% else %}
-					{% endif%}
+		  {% if classe6 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP7' %}">
+			  {% trans 'GP7' %}
+		  </button>
+		  {% elif classe6 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'GP7' %}">
+			  {% trans 'GP7' %}
+		  </button>
+		  {% endif%}
+			<br>
+			<br>
+			<br>
 
-					{% if classe9 == 1 %}
-						<div class="barra75" style="width:50%"> FR Level </div>
-					{% elif classe9 == 0  %}
-						<div class="barra25" style="width:50%"> FR Level </div>
-					{% else %}
-					{% endif%}
+			<h4 class="modal-title">{% trans 'Levels' %}</h4>
 
-					{% if classe10 == 1 %}
-						<div class="barra75" style="width:50%"> FS Level </div>
-					{% elif classe10 == 0  %}
-						<div class="barra25" style="width:50%"> FS Level </div>
-					{% else %}
-					{% endif%}
-				</div>
+
+		  {% if classe7 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'FT' %}">
+			  {% trans 'FT' %}
+		  </button>
+		  {% elif classe7 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'FT' %}">
+			  {% trans 'FT' %}
+		  </button>
+		  {% endif%}
+
+		  {% if classe8 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'FP' %}">
+			  {% trans 'FP' %}
+		  </button>
+		  {% elif classe8 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'FP' %}">
+			  {% trans 'FP' %}
+		  </button>
+		  {% endif%}
+
+		  {% if classe9 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'FR' %}">
+			  {% trans 'FR' %}
+		  </button>
+		  {% elif classe9 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'FR' %}">
+			  {% trans 'FR' %}
+		  </button>
+		  {% endif%}
+
+		  {% if classe10 == 1 %}
+		  <button type="button"
+            class="shadow btn btn-success js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'FS' %}">
+			  {% trans 'FS' %}
+		  </button>
+		  {% elif classe10 == 0  %}
+		  <button type="button"
+            class="shadow btn btn-outline-danger js-action-preview"
+            data-toggle="tooltip"
+            title="{% trans 'FS' %}">
+			  {% trans 'FS' %}
+		  </button>
+		  {% endif%}
+		{% endif%}
+
 			</div>
       {% endif %}
     </div>
