@@ -7,7 +7,7 @@
 <div class="js-action-preview-form">
   <div class="modal-header">
     {% if n_items %}
-      <h4 class="modal-title">{% blocktrans %}Feedback Analyze {% endblocktrans %}</h4>
+      <h4 class="modal-title">{% blocktrans %}Feedback Analyzer {% endblocktrans %}</h4>
     {% else %}
       <h4 class="modal-title">{% trans 'Feedback Analyzer' %}</h4>
     {% endif %}
@@ -37,188 +37,257 @@
 
       	<div class='conteudo3'>
 
-		<h4 class="modal-title">{% trans 'Good Practices' %}</h4>
-		  {% if classe0 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP1' %}">
-			  {% trans 'GP1' %}
-		  </button>
-		  {% elif classe0 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP1' %}">
-			  {% trans 'GP1' %}
-		  </button>
-		  {% endif%}
+		<h4 class="modal-title">{% trans 'Boas práticas de Feedback' %}</h4>
 
-		  {% if classe1 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP2' %}">
-			  {% trans 'GP2' %}
-		  </button>
-		  {% elif classe1 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP2' %}">
-			  {% trans 'GP2' %}
-		  </button>
-
-		  {% if classe2 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP3' %}">
-			  {% trans 'GP3' %}
-		  </button>
-		  {% elif classe2 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP3' %}">
-			  {% trans 'GP3' %}
-		  </button>
-		  {% endif%}
-
-		  {% if classe3 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP4' %}">
-			  {% trans 'GP4' %}
-		  </button>
-		  {% elif classe3 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP4' %}">
-			  {% trans 'GP4' %}
-		  </button>
-		  {% endif%}
-
-		  {% if classe4 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP5' %}">
-			  {% trans 'GP5' %}
-		  </button>
-		  {% elif classe4 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP5' %}">
-			  {% trans 'GP5' %}
-		  </button>
-		  {% endif%}
-
-		  {% if classe5 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP6' %}">
-			  {% trans 'GP6' %}
-		  </button>
-		  {% elif classe5 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP6' %}">
-			  {% trans 'GP6' %}
-		  </button>
-		  {% endif%}
-
-		  {% if classe6 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP7' %}">
-			  {% trans 'GP7' %}
-		  </button>
-		  {% elif classe6 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'GP7' %}">
-			  {% trans 'GP7' %}
-		  </button>
-		  {% endif%}
 			<br>
+			<p>
+				{% if classe0 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe0" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP1
+			  </a>
+				{% elif classe0 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe0" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP1
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe0">
+			  <div class="card card-body">
+				<p> Ajuda a esclarecer o bom desempenho </p>
+				<ul>
+					<li> Dar exemplos eficazes de bom desempenho </li>
+					<li> Mostrar ao aluno quais são as metas, critérios e objetivos esperados </li>
+					<li> Ajudar o aluno mostrando a ele quais são os objetivos esperados, se o aluno atingiu o objetivo. </li>
+				</ul>
+			  </div>
+			</div>
+
+
+			<p>
+				{% if classe1 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe1" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP2
+			  </a>
+				{% elif classe1 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe1" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP2
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe1">
+			  <div class="card card-body">
+				<p> Facilita o desenvolvimento da auto-avaliação (reflexão) na aprendizagem</p>
+				<ul>
+					<li> Solicitar ao aluno que compare sua atividade com outros colegas. </li>
+					<li> Pedir a opinião do aluno em relação ao feedback dado pelo professor. </li>
+					<li> Solicitar aos alunos que identifiquem os pontos fortes e fracos do seu próprio trabalho. </li>
+				</ul>
+			  </div>
+			</div>
+
+			<p>
+				{% if classe2 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe2" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP3
+			  </a>
+				{% elif classe2 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe2" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP3
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe2">
+			  <div class="card card-body">
+				<p> Fornece informações de alta qualidade aos alunos sobre sua aprendizagem</p>
+				<ul>
+					<li> Elogios ao lado de críticas construtivas. </li>
+					<li> Fornecer conselhos corretivos. </li>
+					<li> Limitar a quantidade de feedback para que seja realmente usado. </li>
+				</ul>
+			  </div>
+			</div>
+
+
+
+			<p>
+				{% if classe3 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe3" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP4
+			  </a>
+				{% elif classe3 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe3" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP4
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe3">
+			  <div class="card card-body">
+				<p> Incentiva o diálogo entre professores e colegas em torno da aprendizagem </p>
+				<ul>
+					<li> Solicitar ao aluno que dialogue com os colegas da turma </li>
+					<li> Ajudar o aluno a tirar dúvidas </li>
+				</ul>
+			  </div>
+			</div>
+
+
+
+			<p>
+				{% if classe4 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe4" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP5
+			  </a>
+				{% elif classe4 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe4" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP5
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe4">
+			  <div class="card card-body">
+				<p> Incentiva crenças motivacionais positivas e auto-estima </p>
+				<ul>
+					<li> Informações sobre progresso e realização. </li>
+					<li> Fornecer elogios. </li>
+					<li> Não dar feedback com notas. </li>
+				</ul>
+			  </div>
+			</div>
+
+
+			<p>
+				{% if classe5 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe5" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP6
+			  </a>
+				{% elif classe5 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe5" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP6
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe5">
+			  <div class="card card-body">
+				<p> Oferece oportunidades para fechar a lacuna entre o desempenho atual e o desejado </p>
+				<ul>
+					<li> Deve ajudar os alunos a reconhecer os próximos passos no aprendizado e como realizá-los. </li>
+				</ul>
+			  </div>
+			</div>
+
+
+			<p>
+				{% if classe6 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe6" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP7
+			  </a>
+				{% elif classe6 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe6" role="button" aria-expanded="false" aria-controls="collapseExample">
+				GP7
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe6">
+			  <div class="card card-body">
+				<p> Oferece oportunidades para fechar a lacuna entre o desempenho atual e o desejado </p>
+				<ul>
+					<li> Deve ajudar os alunos a reconhecer os próximos passos no aprendizado e como realizá-los. </li>
+				</ul>
+			  </div>
+			</div>
+
+
 			<br>
+			<h4 class="modal-title">{% trans 'Níveis de Feedback' %}</h4>
+
 			<br>
+			<p>
+				{% if classe7 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe7" role="button" aria-expanded="false" aria-controls="collapseExample">
+				FT
+			  </a>
+				{% elif classe7 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe7" role="button" aria-expanded="false" aria-controls="collapseExample">
+				FT
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe7">
+			  <div class="card card-body">
+				<p> O feedback pode ser sobre uma tarefa, como se o trabalho está correto ou incorreto, pode incluir instruções para mais informações ou informações diferentes.</p>
+				<ul>
+					<li> Fornecer informações de atividades corretivas. </li>
+				</ul>
+			  </div>
+			</div>
 
-			<h4 class="modal-title">{% trans 'Levels' %}</h4>
 
 
-		  {% if classe7 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'FT' %}">
-			  {% trans 'FT' %}
-		  </button>
-		  {% elif classe7 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'FT' %}">
-			  {% trans 'FT' %}
-		  </button>
-		  {% endif%}
+			<p>
+				{% if classe8 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe8" role="button" aria-expanded="false" aria-controls="collapseExample">
+				FP
+			  </a>
+				{% elif classe8 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe8" role="button" aria-expanded="false" aria-controls="collapseExample">
+				FP
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe8">
+			  <div class="card card-body">
+				<p> O feedback pode ser direcionado para o processo usado para criar um produto ou concluir uma tarefa, é mais diretamente direcionado para o processamento de informações ou processos de aprendizagem que requerem compreensão ou conclusão da tarefa.</p>
+				<ul>
+					<li> Fornecer informações corretivas que exijam compreensão do aluno ou conclusão da tarefa. </li>
+				</ul>
+			  </div>
+			</div>
 
-		  {% if classe8 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'FP' %}">
-			  {% trans 'FP' %}
-		  </button>
-		  {% elif classe8 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'FP' %}">
-			  {% trans 'FP' %}
-		  </button>
-		  {% endif%}
 
-		  {% if classe9 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'FR' %}">
-			  {% trans 'FR' %}
-		  </button>
-		  {% elif classe9 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'FR' %}">
-			  {% trans 'FR' %}
-		  </button>
-		  {% endif%}
+			<p>
+				{% if classe9 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe9" role="button" aria-expanded="false" aria-controls="collapseExample">
+				FR
+			  </a>
+				{% elif classe9 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe9" role="button" aria-expanded="false" aria-controls="collapseExample">
+				FR
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe9">
+			  <div class="card card-body">
+				<p> O feedback para os alunos pode ser focado no nível de autorregulação, incluindo maior autoavaliação ou habilidades de confiança, pode ter grandes influências na autoeficácia, proficiência em autorregulação e nas crenças pessoais dos alunos como alunos.</p>
+				<ul>
+					<li> Fornecer informações que fazem o aluno refletir sobre uma resposta, metodologia ou assunto. </li>
+				</ul>
+			  </div>
+			</div>
 
-		  {% if classe10 == 1 %}
-		  <button type="button"
-            class="shadow btn btn-success js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'FS' %}">
-			  {% trans 'FS' %}
-		  </button>
-		  {% elif classe10 == 0  %}
-		  <button type="button"
-            class="shadow btn btn-outline-danger js-action-preview"
-            data-toggle="tooltip"
-            title="{% trans 'FS' %}">
-			  {% trans 'FS' %}
-		  </button>
-		  {% endif%}
-		{% endif%}
+
+			<p>
+				{% if classe10 == 1 %}
+			  <a class="btn btn-success js-action-preview" data-toggle="collapse" href="#classe10" role="button" aria-expanded="false" aria-controls="collapseExample">
+				FS
+			  </a>
+				{% elif classe10 == 0  %}
+				<a class="btn btn-outline-danger js-action-preview" data-toggle="collapse" href="#classe10" role="button" aria-expanded="false" aria-controls="collapseExample">
+				FS
+				</a>
+				{% endif%}
+			</p>
+			<div class="collapse" id="classe10">
+			  <div class="card card-body">
+				<p> O feedback pode ser pessoal, no sentido de que é direcionado a você mesmo. Frequentemente, não está relacionado ao desempenho da tarefa.</p>
+				<ul>
+					<li> Fornecer elogios aos alunos. </li>
+					<li> Motivar os alunos. </li>
+				</ul>
+			  </div>
+			</div>
+
+
+
 
 			</div>
       {% endif %}

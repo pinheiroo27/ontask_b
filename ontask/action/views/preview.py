@@ -11,20 +11,27 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ontask import models
 from ontask.action import services
+# from ontask.action.views.cohmetrixBR import run_coh_metrix
 from ontask.core import ajax_required, get_action, is_instructor
+
+import json
+import urllib.parse as parse
+import urllib.request as request
 
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import RepeatedKFold, cross_validate, RepeatedStratifiedKFold
+from sklearn.model_selection import RepeatedStratifiedKFold
 from sklearn.metrics import confusion_matrix, accuracy_score, cohen_kappa_score  # , mean_squared_error
 import os
 import xgboost as xgb
 
 from nltk.tokenize import word_tokenize
-import string
+import string, re
+import spacy
 import nltk
+
 nltk.download('punkt')
+nlp = spacy.load('pt')
 
 classifiers = []
 for i in range(11):
@@ -34,7 +41,7 @@ for i in range(11):
 def read_classes(path):
     CURR_DIR = os.path.dirname(os.path.realpath(__file__))
     print(CURR_DIR)
-    data = pd.read_csv(CURR_DIR+'/'+path)
+    data = pd.read_csv(CURR_DIR + '/' + path)
     id_name = data.keys()[0]
     vector = []
     print(id_name)
@@ -49,13 +56,13 @@ def read_classes(path):
 def read_data(csv):
     CURR_DIR = os.path.dirname(os.path.realpath(__file__))
     print(CURR_DIR)
-    data = pd.read_csv(CURR_DIR+'/'+csv)
+    data = pd.read_csv(CURR_DIR + '/' + csv)
     # id col name
     id_name = data.keys()[0]
     new_data = data.copy()
 
     # Remove id col
-    del new_data[id_name]
+    # del new_data[id_name]
     return data, new_data.values.tolist()
 
 
@@ -67,7 +74,8 @@ def extract_liwc(text):
     # reading liwc
     CURR_DIR = os.path.dirname(os.path.realpath(__file__))
     print(CURR_DIR)
-    wn = open(CURR_DIR+'/'+'LIWC2007_Portugues_win.dic.txt', 'r', encoding='utf-8', errors='ignore').read().split('\n')
+    wn = open(CURR_DIR + '/' + 'LIWC2007_Portugues_win.dic.txt', 'r', encoding='utf-8', errors='ignore').read().split(
+        '\n')
     word_set_liwc = []
     for line in wn:
         words = line.split('\t')
@@ -75,7 +83,7 @@ def extract_liwc(text):
             word_set_liwc.append(words)
 
     # indexes of liwc
-    indices = open(CURR_DIR+'/'+'indices.txt', 'r', encoding='utf-8', errors='ignore').read().split('\n')
+    indices = open(CURR_DIR + '/' + 'indices.txt', 'r', encoding='utf-8', errors='ignore').read().split('\n')
 
     words_line = []
     for word in word_tokenize(text):
@@ -99,11 +107,22 @@ def extract_liwc(text):
     return liwc
 
 
+def clean_sentence(sentence):
+    # sent = sentence.replace("&gt", " ").strip()
+    sent = re.sub(' {1,}', ' ', sentence).strip(' ').replace("&gt", " ")
+    doc = nlp(sent)
+    cleaned_text = ""
+    for i, token in enumerate(doc):
+        if token.text != " ":
+            cleaned_text += token.text + " "
+    return cleaned_text
+
+
 # ------------------------------------ADITIONAL FEATURES---------------------------------------------------------------#
 # additional features
 def additionals(post):
     original_post = post.lower()
-    # post = nlp(post)
+    post_nlp = nlp(post)
 
     greeting = sum([word_tokenize(original_post).count(word) for word in
                     ['olá', 'oi', 'como vai', 'tudo bem', 'como está', 'como esta', 'bom dia', 'boa tarde',
@@ -112,13 +131,12 @@ def additionals(post):
                       ['parabéns', 'parabens', 'excelente', 'fantástico', 'fantastico', 'bom', 'bem', 'muito bom',
                        'muito bem', 'ótimo', 'otimo', 'incrivel', 'incrível', 'maravilhoso', 'sensacional',
                        'irrepreensível', 'irrepreensivel', 'perfeito']])
-    # ners = len(post.ents)
+    ners = len(post_nlp.ents)
 
-    return [greeting, compliment]
+    return [greeting, compliment, ners]
 
 
 def cross_validation(X, y, k, ntree, mtry, resultados):
-
     # SAVE RESULTS FOR EACH ROUND OF CROSS-VALIDATION
     resultados_parciais = {}
     resultados_parciais.update({'acurácia': []})
@@ -129,7 +147,6 @@ def cross_validation(X, y, k, ntree, mtry, resultados):
     matriz_confusao = np.zeros((2, 2))
 
     for train_index, test_index in rkf.split(X, y):
-
         X_train, X_test = [X[i] for i in train_index], [X[j] for j in test_index]
         y_train, y_test = [y[i] for i in train_index], [y[j] for j in test_index]
 
@@ -155,7 +172,7 @@ def cross_validation(X, y, k, ntree, mtry, resultados):
 
     media = np.mean(resultados_parciais["acurácia"])
     std = np.std(resultados_parciais["acurácia"])
-    resultados["acurácia"].append(str(round(media, 4))+"("+str(round(std, 4))+")")
+    resultados["acurácia"].append(str(round(media, 4)) + "(" + str(round(std, 4)) + ")")
 
     resultados["accuracy"].append(round(media, 4))
     resultados["erro"].append(round(1 - media, 4))
@@ -179,16 +196,40 @@ def error_by_class(matriz_confusao, resultados):
 
         resultados["erro_classe_" + str(i)].append(taxa_erro)
 
+
+def extract_features_cohmetrix(text):
+    jobs_object = []
+    params = {
+        'text': text
+    }
+
+    query_params = parse.urlencode(params)
+    request_search_url = f"http://localhost:4200/api/test?{query_params}"
+    request_search = request.Request(request_search_url, method='GET')
+
+    response = request.urlopen(request_search)
+    response_json = response.read()
+    jobs_object = json.loads(response_json)['features']
+    features = []
+    for line in jobs_object:
+        if str(line) == "nan":
+            features.append(float(0))
+        else:
+            features.append(float(line))
+
+    return features
+
+
 @csrf_exempt
 @user_passes_test(is_instructor)
 @ajax_required
 @get_action(pf_related='actions')
 def preview_next_all_false(
-    request: http.HttpRequest,
-    pk: Optional[int] = None,
-    idx: Optional[int] = None,
-    workflow: Optional[models.Workflow] = None,
-    action: Optional[models.Action] = None,
+        request: http.HttpRequest,
+        pk: Optional[int] = None,
+        idx: Optional[int] = None,
+        workflow: Optional[models.Workflow] = None,
+        action: Optional[models.Action] = None,
 ) -> http.JsonResponse:
     """Preview message with all conditions evaluating to false.
 
@@ -230,11 +271,11 @@ def preview_next_all_false(
 @ajax_required
 @get_action(pf_related='actions')
 def preview_response(
-    request: http.HttpRequest,
-    pk: int,
-    idx: int,
-    workflow: Optional[models.Workflow] = None,
-    action: Optional[models.Action] = None,
+        request: http.HttpRequest,
+        pk: int,
+        idx: int,
+        workflow: Optional[models.Workflow] = None,
+        action: Optional[models.Action] = None,
 ) -> http.JsonResponse:
     """Preview content of action.
 
@@ -258,8 +299,8 @@ def preview_response(
     # Initial context to render the response page.
     context = {'action': action, 'index': idx}
     if (
-        action.action_type == models.Action.EMAIL_REPORT
-        or action.action_type == models.Action.JSON_REPORT
+            action.action_type == models.Action.EMAIL_REPORT
+            or action.action_type == models.Action.JSON_REPORT
     ):
         services.create_list_preview_context(action, context)
     else:
@@ -286,11 +327,11 @@ def preview_response(
 @ajax_required
 @get_action(pf_related='actions')
 def preview_feedback(
-    request: http.HttpRequest,
-    pk: int,
-    idx: int,
-    workflow: Optional[models.Workflow] = None,
-    action: Optional[models.Action] = None,
+        request: http.HttpRequest,
+        pk: int,
+        idx: int,
+        workflow: Optional[models.Workflow] = None,
+        action: Optional[models.Action] = None,
 ) -> http.JsonResponse:
     """Preview content of action.
 
@@ -312,13 +353,17 @@ def preview_feedback(
     data = {}
     data_string = ""
     for j in range(11):
-        liwc = extract_liwc(texto)
-        adds = additionals(texto)
-        cohmetrix = [50.0, 0.0, 500.0, 86.405, 450.0, 2.0, 2.5, 10.0, 150.0, 1.0, 2.0, 20.0, 100.0, 300.0, 50.0, 0.0,
-                     0.0,
-                     0.0, 50.0, 76562.5, 3441.5, 1.0, 0.0, 0.0, 0.95, 0.25, 250.0, 0.0, 150.0, 0.0, 50.0, 0.0, 100.0,
-                     0.0,
-                     0.0, 0.0, 0.0, 0.0, 0.0, 1.66666666666667, 10.8, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+        sentence_clean = clean_sentence(texto)
+        liwc = extract_liwc(sentence_clean)
+        adds = additionals(sentence_clean)
+        # cohmetrix = extract_features_cohmetrix(sentence_clean)
+        cohmetrix = [1, 1, 10, 1.0, 0.0, 8.0, 0.0, 2.2, 1.398411797560202, 5.5, 2.958039891549808, 0,
+                     0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+                     1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                     0.0, 0.0, 0.0, 0.0, 0.0, 2.0, -1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
+                     2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 6.646578958679581, 1.8941022799930982, 6.646578958679581,
+                     383.0, 584.6666666666666, 302.0, 357.3333333333333, 386.6666666666667,
+                     -12.784999999999997, 17.029999999999998, 0]
         features = []
         for x in liwc:
             features.append(x)
@@ -326,8 +371,7 @@ def preview_feedback(
             features.append(y)
         features.append(adds[0])
         features.append(adds[1])
-        features.append(0)
-        features.append(0)
+        features.append(adds[2])
 
         newfeatures = []
         newfeatures.append(features)
@@ -337,7 +381,7 @@ def preview_feedback(
         y_pred = classifiers[j].predict(np_features)
         print("classe predita ", y_pred)
         data['classe' + str(j)] = y_pred[0]
-        data_string += 'classe' + str(j+1) + ": " + str(y_pred[0]) + " <br> "
+        data_string += 'classe' + str(j + 1) + ": " + str(y_pred[0]) + " <br> "
 
     if action_content:
         action.set_text_content(action_content)
@@ -346,8 +390,8 @@ def preview_feedback(
     context = {'action': action, 'index': idx}
     print(context)
     if (
-        action.action_type == models.Action.EMAIL_REPORT
-        or action.action_type == models.Action.JSON_REPORT
+            action.action_type == models.Action.EMAIL_REPORT
+            or action.action_type == models.Action.JSON_REPORT
     ):
         services.create_list_preview_context(action, context)
     else:
@@ -372,16 +416,17 @@ def preview_feedback(
             context,
             request=request)})
 
+
 @csrf_exempt
 @user_passes_test(is_instructor)
 @ajax_required
 @get_action(pf_related='actions')
 def init_classifier(
-    request: http.HttpRequest,
-    pk: int,
-    idx: int,
-    workflow: Optional[models.Workflow] = None,
-    action: Optional[models.Action] = None,
+        request: http.HttpRequest,
+        pk: int,
+        idx: int,
+        workflow: Optional[models.Workflow] = None,
+        action: Optional[models.Action] = None,
 ) -> http.JsonResponse:
     """Preview content of action.
 
@@ -424,7 +469,7 @@ def init_classifier(
         resultados, classifiers[j] = cross_validation(features, y_train, k=10, ntree=500, mtry=37,
                                                       resultados=resultados)
         print(resultados)
-        data['dados'] = "pronto"
+        data['dados'] = "Ready"
 
     if action_content:
         action.set_text_content(data['dados'])
@@ -433,8 +478,8 @@ def init_classifier(
     context = {'action': action, 'index': idx}
     print(context)
     if (
-        action.action_type == models.Action.EMAIL_REPORT
-        or action.action_type == models.Action.JSON_REPORT
+            action.action_type == models.Action.EMAIL_REPORT
+            or action.action_type == models.Action.JSON_REPORT
     ):
         services.create_list_preview_context(action, context)
     else:
