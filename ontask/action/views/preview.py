@@ -352,33 +352,37 @@ def preview_feedback(
     texto = str(action_content).replace("<p>", "").replace("</p>", "")
     data = {}
     data_string = ""
+
+    sentence_clean = clean_sentence(texto)
+    liwc = extract_liwc(sentence_clean)
+    adds = additionals(sentence_clean)
+    # cohmetrix = extract_features_cohmetrix(sentence_clean)
+    cohmetrix = [1, 1, 10, 1.0, 0.0, 8.0, 0.0, 2.2, 1.398411797560202, 5.5, 2.958039891549808, 0,
+                 0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0,
+                 1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+                 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, -1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
+                 2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 6.646578958679581, 1.8941022799930982, 6.646578958679581,
+                 383.0, 584.6666666666666, 302.0, 357.3333333333333, 386.6666666666667,
+                 -12.784999999999997, 17.029999999999998, 0]
+    features = []
+    for x in liwc:
+        features.append(x)
+    for y in cohmetrix:
+        features.append(y)
+    features.append(adds[0])
+    features.append(adds[1])
+    features.append(adds[2])
+
+    newfeatures = []
+    newfeatures.append(features)
+    np_features = np.asarray(newfeatures)
+
     for j in range(11):
-        sentence_clean = clean_sentence(texto)
-        liwc = extract_liwc(sentence_clean)
-        adds = additionals(sentence_clean)
-        # cohmetrix = extract_features_cohmetrix(sentence_clean)
-        cohmetrix = [1, 1, 10, 1.0, 0.0, 8.0, 0.0, 2.2, 1.398411797560202, 5.5, 2.958039891549808, 0,
-                     0, -1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0,
-                     1.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
-                     0.0, 0.0, 0.0, 0.0, 0.0, 2.0, -1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,
-                     2, 2, 0, 0, 0, 0, 0, 0, 0, 0, 6.646578958679581, 1.8941022799930982, 6.646578958679581,
-                     383.0, 584.6666666666666, 302.0, 357.3333333333333, 386.6666666666667,
-                     -12.784999999999997, 17.029999999999998, 0]
-        features = []
-        for x in liwc:
-            features.append(x)
-        for y in cohmetrix:
-            features.append(y)
-        features.append(adds[0])
-        features.append(adds[1])
-        features.append(adds[2])
-
-        newfeatures = []
-        newfeatures.append(features)
-        np_features = np.asarray(newfeatures)
-
-        global classifiers
-        y_pred = classifiers[j].predict(np_features)
+        if j == 1 or j == 3 or j == 6 or j == 9:
+            y_pred = 0
+        else:
+            global classifiers
+            y_pred = classifiers[j].predict(np_features)
         print("classe predita ", y_pred)
         data['classe' + str(j)] = y_pred[0]
         data_string += 'classe' + str(j + 1) + ": " + str(y_pred[0]) + " <br> "
